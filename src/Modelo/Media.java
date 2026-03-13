@@ -1,22 +1,18 @@
-package Clases;
+package Modelo;
 
-import java.time.LocalDateTime;
-
-public class Expansion implements Comparable<Expansion>
+public abstract class Media implements Comparable<Media>
 {
     private int id;
     private String titulo;
     private String creador;
     private String genero;
-    private LocalDateTime fecha;
 
-    public Expansion(int id, String titulo, String creador, String genero, LocalDateTime fecha)
+    public Media(int id, String titulo, String creador, String genero)
     {
         this.id = id;
         this.titulo = titulo;
         this.creador = creador;
         this.genero = genero;
-        this.fecha = fecha;
     }
 
     public int getId()
@@ -57,21 +53,5 @@ public class Expansion implements Comparable<Expansion>
     public void setGenero(String genero)
     {
         this.genero = genero;
-    }
-
-    public LocalDateTime getFecha()
-    {
-        return fecha;
-    }
-
-    public void setFecha(LocalDateTime fecha)
-    {
-        this.fecha = fecha;
-    }
-
-    @Override
-    public int compareTo(Expansion o)
-    {
-        return 0;
     }
 }
