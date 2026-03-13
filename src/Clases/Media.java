@@ -1,6 +1,6 @@
 package Clases;
 
-public abstract class Media
+public abstract class Media implements Comparable<Media>
 {
     private int id;
     private String titulo;
