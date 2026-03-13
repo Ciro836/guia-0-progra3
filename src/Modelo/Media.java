@@ -1,4 +1,4 @@
-package Clases;
+package Modelo;
 
 public abstract class Media implements Comparable<Media>
 {
