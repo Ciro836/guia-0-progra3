@@ -1,6 +1,6 @@
 package Clases;
 
-public class Juego
+public class Juego implements Comparable<Juego>
 {
     private int id;
     private String titulo;
@@ -65,5 +65,12 @@ public class Juego
     public void setNumVersion(int numVersion)
     {
         this.numVersion = numVersion;
+    }
+
+
+    @Override
+    public int compareTo(Juego j)
+    {
+        return 0;
     }
 }
