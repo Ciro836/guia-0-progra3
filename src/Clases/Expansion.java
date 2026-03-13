@@ -2,7 +2,7 @@ package Clases;
 
 import java.time.LocalDateTime;
 
-public class Expansion
+public class Expansion implements Comparable<Expansion>
 {
     private int id;
     private String titulo;
@@ -67,5 +67,11 @@ public class Expansion
     public void setFecha(LocalDateTime fecha)
     {
         this.fecha = fecha;
+    }
+
+    @Override
+    public int compareTo(Expansion o)
+    {
+        return 0;
     }
 }
