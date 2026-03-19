@@ -3,10 +3,12 @@ package UI;
 import Excepciones.IdInvalidoException;
 import Excepciones.IdentificadorDuplicadoException;
 import Excepciones.NumVersionInvalidoException;
+import Modelo.Expansion;
 import Modelo.Juego;
 import Modelo.Media;
 import Repositorios.RepositorioMedia;
 
+import java.security.cert.Extension;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -49,7 +51,7 @@ public class MenuUI // UI = User Interface
         } while (option != 999);
     }
 
-    public void procesarOpcion(int opcion)
+    private void procesarOpcion(int opcion)
     {
         switch (opcion)
         {
@@ -63,74 +65,31 @@ public class MenuUI // UI = User Interface
         }
     }
 
-    public void agregarJuego()
+    private void agregarJuego()
     {
         Juego juego = crearJuego();
 
-        if (juego != null)
+        try
         {
-            try
-            {
-                repositorio.agregar(juego);
-                System.out.println("\nJuego agregado correctamente...");
-            }
-            catch (IdentificadorDuplicadoException e)
-            {
-                System.out.println("\nError al agregar el juego: " + e.getMessage());
-            }
+            repositorio.agregar(juego);
+            System.out.println("\nJuego agregado correctamente...");
         }
-        else
+        catch (IdentificadorDuplicadoException e)
         {
-            System.out.println("\nError al cargar los datos del juego.");
+            System.out.println("\nError al agregar el juego: " + e.getMessage());
         }
     }
 
-    public Juego crearJuego()
+    private Juego crearJuego()
     {
         System.out.println("CREACION DE JUEGO\n");
 
-        int id;
-        String genero;
-        int numVersion;
-
-        while (true)
-        {
-            try
-            {
-                id = pedirEntero("Ingrese el ID del Juego: ");
-
-                if (id <= 0)
-                {
-                    throw new IdInvalidoException();
-                }
-                break;
-            }
-            catch (IdInvalidoException e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-
+        int id = pedirID("Ingresa el id del juego: ");
         String titulo = pedirStringNoVacio("Ingrese el nombre del titulo: ", "titulo");
         String creador = pedirStringNoVacio("Ingrese el nombre del creador: ", "creador");
+        String genero = pedirGenero("Ingrese el nombre del genero: ", "genero");
 
-
-        while (true)
-        {
-            try
-            {
-                genero = pedirStringNoVacio("Ingrese el nombre del genero: ", "genero");
-                if (genero.matches(".*\\d+.*"))
-                {
-                    throw new InputMismatchException("El género no puede contener números.");
-                }
-                break;
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
+        int numVersion;
 
         while (true)
         {
@@ -149,7 +108,6 @@ public class MenuUI // UI = User Interface
                 System.out.println(e.getMessage());
             }
         }
-
 
         return new Juego(id, titulo, creador, genero, numVersion);
     }
@@ -202,5 +160,74 @@ public class MenuUI // UI = User Interface
         }
 
         return entrada;
+    }
+
+    private int pedirID(String mensaje)
+    {
+        int id;
+
+        while (true)
+        {
+            try
+            {
+                id = pedirEntero(mensaje);
+
+                if (id <= 0)
+                {
+                    throw new IdInvalidoException();
+                }
+                break;
+            }
+            catch (IdInvalidoException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+        return id;
+    }
+
+    private String pedirGenero(String mensaje, String nombreCampo)
+    {
+        String genero;
+
+        while (true)
+        {
+            try
+            {
+                genero = pedirStringNoVacio(mensaje, nombreCampo);
+                if (genero.matches(".*\\d+.*"))
+                {
+                    throw new InputMismatchException("El género no puede contener números.");
+                }
+                break;
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println(e.getMessage());
+            }
+        }
+        return genero;
+    }
+
+    private void agregarExpansion()
+    {
+        Expansion expansion = crearExpansion();
+
+        try
+        {
+            repositorio.agregar(expansion);
+        }
+        catch (IdentificadorDuplicadoException e)
+        {
+            System.out.println("\nError al agregar la expansion: " + e.getMessage());
+        }
+    }
+
+    private Expansion crearExpansion()
+    {
+        int id = pedirEntero("Ingrese el ID de la expansion: ");
+        String titulo = pedirStringNoVacio("Ingrese el titulo de la expansion: ", "titulo");
+
+        return null;
     }
 }
