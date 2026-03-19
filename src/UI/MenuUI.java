@@ -9,7 +9,6 @@ import Modelo.Juego;
 import Modelo.Media;
 import Repositorios.RepositorioMedia;
 
-import java.security.cert.Extension;
 import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -86,10 +85,10 @@ public class MenuUI // UI = User Interface
     {
         System.out.println("CREACION DE JUEGO\n");
 
-        int id = pedirID("Ingresa el id del juego: ");
+        int id = pedirID();
         String titulo = pedirStringNoVacio("Ingrese el nombre del titulo: ", "titulo");
         String creador = pedirStringNoVacio("Ingrese el nombre del creador: ", "creador");
-        String genero = pedirGenero("Ingrese el nombre del genero: ", "genero");
+        String genero = pedirGenero();
 
         int numVersion;
 
@@ -164,7 +163,7 @@ public class MenuUI // UI = User Interface
         return entrada;
     }
 
-    private int pedirID(String mensaje)
+    private int pedirID()
     {
         int id;
 
@@ -172,7 +171,7 @@ public class MenuUI // UI = User Interface
         {
             try
             {
-                id = pedirEntero(mensaje);
+                id = pedirEntero("Ingresa el ID: ");
 
                 if (id <= 0)
                 {
@@ -188,7 +187,7 @@ public class MenuUI // UI = User Interface
         return id;
     }
 
-    private String pedirGenero(String mensaje, String nombreCampo)
+    private String pedirGenero()
     {
         String genero;
 
@@ -196,7 +195,7 @@ public class MenuUI // UI = User Interface
         {
             try
             {
-                genero = pedirStringNoVacio(mensaje, nombreCampo);
+                genero = pedirStringNoVacio("Ingrese el nombre del genero: ", "genero");
                 if (genero.matches(".*\\d+.*"))
                 {
                     throw new InputMismatchException("El género no puede contener números.");
@@ -229,10 +228,10 @@ public class MenuUI // UI = User Interface
     {
         System.out.println("CREACION DE EXPANSION\n");
 
-        int id = pedirID("Ingresa el id de la expansion: ");
+        int id = pedirID();
         String titulo = pedirStringNoVacio("Ingrese el titulo de la expansion: ", "titulo");
         String creador = pedirStringNoVacio("Ingrese el nombre del creador: ", "creador");
-        String genero = pedirGenero("Ingrese el nombre del genero: ", "genero");
+        String genero = pedirGenero();
 
         LocalDateTime fecha = LocalDateTime.now();
 
