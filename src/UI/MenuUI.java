@@ -181,16 +181,26 @@ public class MenuUI // UI = User Interface
 
     private String pedirStringNoVacio(String mensaje, String nombreCampo)
     {
+        String entrada;
+
         while (true)
         {
-            System.out.print(mensaje);
-            String entrada = sc.nextLine();
-            if (entrada.trim().isEmpty())
+            try
+            {
+                System.out.print(mensaje);
+                entrada = sc.nextLine();
+                if (entrada.trim().isEmpty())
+                {
+                    throw new InputMismatchException();
+                }
+                break;
+            }
+            catch (InputMismatchException e)
             {
                 System.out.println("❌ Error: El " + nombreCampo + " no puede estar vacío.");
-                continue;
             }
-            return entrada;
         }
+
+        return entrada;
     }
 }
