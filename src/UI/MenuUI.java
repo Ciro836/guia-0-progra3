@@ -90,8 +90,6 @@ public class MenuUI // UI = User Interface
         System.out.println("CREACION DE JUEGO\n");
 
         int id;
-        String titulo;
-        String creador;
         String genero;
         int numVersion;
 
@@ -99,88 +97,38 @@ public class MenuUI // UI = User Interface
         {
             try
             {
-                System.out.print("Ingrese el ID: ");
-                id = Integer.parseInt(sc.nextLine());
-                if (id < 0) throw new IdInvalidoException();
+                id = pedirEntero("Ingrese el ID del Juego: ");
+
+                if (id <= 0)
+                {
+                    throw new IdInvalidoException();
+                }
                 break;
             }
             catch (IdInvalidoException e)
             {
                 System.out.println(e.getMessage());
             }
-            catch (NumberFormatException e)
-            {
-                System.out.println("❌ Error: Debe ingresar un número entero.");
-            }
         }
+
+        String titulo = pedirStringNoVacio("Ingrese el nombre del titulo: ", "titulo");
+        String creador = pedirStringNoVacio("Ingrese el nombre del creador: ", "creador");
 
 
         while (true)
         {
             try
             {
-                System.out.print("Ingrese el titulo del Juego: ");
-                titulo = sc.nextLine();
-
-                // Verificamos que no esté vacío (opcional pero recomendado)
-                if (titulo.trim().isEmpty())
-                {
-                    throw new InputMismatchException("⚠️ El título no puede estar vacío.");
-                }
-
-                break;
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        while (true)
-        {
-            try
-            {
-                System.out.print("Ingrese el nombre del creador: ");
-                creador = sc.nextLine();
-
-                // Verificamos que no esté vacío (opcional pero recomendado)
-                if (creador.trim().isEmpty())
-                {
-                    throw new InputMismatchException("⚠️ El género no puede estar vacío.");
-                }
-
-                break;
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println(e.getMessage());
-            }
-        }
-
-        while (true)
-        {
-            try
-            {
-                System.out.print("Ingrese el genero del Juego: ");
-                genero = sc.nextLine();
-
-                // 🎯 Verificamos si el texto contiene al menos un número
+                genero = pedirStringNoVacio("Ingrese el nombre del genero: ", "genero");
                 if (genero.matches(".*\\d+.*"))
                 {
                     throw new InputMismatchException("El género no puede contener números.");
                 }
-
-                // Verificamos que no esté vacío (opcional pero recomendado)
-                if (genero.trim().isEmpty())
-                {
-                    throw new InputMismatchException("⚠️ El género no puede estar vacío.");
-                }
-
                 break;
             }
             catch (InputMismatchException e)
             {
-                System.out.println("❌ Error: " + e.getMessage());
+                System.out.println(e.getMessage());
             }
         }
 
@@ -188,23 +136,39 @@ public class MenuUI // UI = User Interface
         {
             try
             {
-                System.out.print("Ingrese el num de version del juego: ");
-                numVersion = Integer.parseInt(sc.nextLine());
+                numVersion = pedirEntero("Ingrese el número de versión: ");
 
                 if (numVersion <= 0)
                 {
                     throw new NumVersionInvalidoException();
                 }
-
                 break;
             }
             catch (NumVersionInvalidoException e)
             {
                 System.out.println(e.getMessage());
             }
+        }
+
+
+        return new Juego(id, titulo, creador, genero, numVersion);
+    }
+
+    private int pedirEntero(String mensaje)
+    {
+        int numero;
+
+        while (true)
+        {
+            try
+            {
+                System.out.print(mensaje);
+                numero = Integer.parseInt(sc.nextLine());
+                break;
+            }
             catch (NumberFormatException e)
             {
-                System.out.println("❌ Error: Debes ingresar un número entero para la Versión.");
+                System.out.println("❌ Error: Debes ingresar un número entero.");
             }
             catch (InputMismatchException e)
             {
@@ -212,7 +176,21 @@ public class MenuUI // UI = User Interface
             }
         }
 
+        return numero;
+    }
 
-        return new Juego(id, titulo, creador, genero, numVersion);
+    private String pedirStringNoVacio(String mensaje, String nombreCampo)
+    {
+        while (true)
+        {
+            System.out.print(mensaje);
+            String entrada = sc.nextLine();
+            if (entrada.trim().isEmpty())
+            {
+                System.out.println("❌ Error: El " + nombreCampo + " no puede estar vacío.");
+                continue;
+            }
+            return entrada;
+        }
     }
 }
