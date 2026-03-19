@@ -72,16 +72,16 @@ public class MenuUI // UI = User Interface
             try
             {
                 repositorio.agregar(juego);
-                System.out.println("Juego agregado correctamente...");
+                System.out.println("\nJuego agregado correctamente...");
             }
             catch (IdentificadorDuplicadoException e)
             {
-                System.out.println(e.getMessage());
+                System.out.println("\nError al agregar el juego: " + e.getMessage());
             }
         }
         else
         {
-            System.out.println("Error al cargar los datos del juego.");
+            System.out.println("\nError al cargar los datos del juego.");
         }
     }
 
@@ -104,73 +104,114 @@ public class MenuUI // UI = User Interface
                 if (id < 0) throw new IdInvalidoException();
                 break;
             }
+            catch (IdInvalidoException e)
+            {
+                System.out.println(e.getMessage());
+            }
             catch (NumberFormatException e)
             {
                 System.out.println("❌ Error: Debe ingresar un número entero.");
             }
-            catch (IdInvalidoException e)
+        }
+
+
+        while (true)
+        {
+            try
+            {
+                System.out.print("Ingrese el titulo del Juego: ");
+                titulo = sc.nextLine();
+
+                // Verificamos que no esté vacío (opcional pero recomendado)
+                if (titulo.trim().isEmpty())
+                {
+                    throw new InputMismatchException("⚠️ El título no puede estar vacío.");
+                }
+
+                break;
+            }
+            catch (InputMismatchException e)
             {
                 System.out.println(e.getMessage());
             }
         }
 
-        try
+        while (true)
         {
-            System.out.print("Ingrese el titulo del Juego: ");
-            titulo = sc.nextLine();
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-            sc.nextLine();
-            return null;
+            try
+            {
+                System.out.print("Ingrese el nombre del creador: ");
+                creador = sc.nextLine();
+
+                // Verificamos que no esté vacío (opcional pero recomendado)
+                if (creador.trim().isEmpty())
+                {
+                    throw new InputMismatchException("⚠️ El género no puede estar vacío.");
+                }
+
+                break;
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println(e.getMessage());
+            }
         }
 
-        try
+        while (true)
         {
-            System.out.print("Ingrese el nombre del creador: ");
-            creador = sc.nextLine();
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-            sc.nextLine();
-            return null;
+            try
+            {
+                System.out.print("Ingrese el genero del Juego: ");
+                genero = sc.nextLine();
+
+                // 🎯 Verificamos si el texto contiene al menos un número
+                if (genero.matches(".*\\d+.*"))
+                {
+                    throw new InputMismatchException("El género no puede contener números.");
+                }
+
+                // Verificamos que no esté vacío (opcional pero recomendado)
+                if (genero.trim().isEmpty())
+                {
+                    throw new InputMismatchException("⚠️ El género no puede estar vacío.");
+                }
+
+                break;
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("❌ Error: " + e.getMessage());
+            }
         }
 
-        try
+        while (true)
         {
-            System.out.print("Ingrese el genero del Juego: ");
-            genero = sc.nextLine();
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-            sc.nextLine();
-            return null;
+            try
+            {
+                System.out.print("Ingrese el num de version del juego: ");
+                numVersion = Integer.parseInt(sc.nextLine());
+
+                if (numVersion <= 0)
+                {
+                    throw new NumVersionInvalidoException();
+                }
+
+                break;
+            }
+            catch (NumVersionInvalidoException e)
+            {
+                System.out.println(e.getMessage());
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("❌ Error: Debes ingresar un número entero para la Versión.");
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
+            }
         }
 
-        try
-        {
-            System.out.print("Ingrese el num de version del juego: ");
-            numVersion = Integer.parseInt(sc.nextLine());
-        }
-        catch (NumVersionInvalidoException e)
-        {
-            System.out.println(e.getMessage());
-            return null;
-        }
-        catch (NumberFormatException e)
-        {
-            System.out.println("❌ Error: Debes ingresar un número entero para la Versión.");
-            return null;
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("❌ Error: debes ingresar un tipo de dato valido.");
-            sc.nextLine();
-            return null;
-        }
 
         return new Juego(id, titulo, creador, genero, numVersion);
     }
