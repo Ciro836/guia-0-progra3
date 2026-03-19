@@ -9,6 +9,7 @@ import Modelo.Media;
 import Repositorios.RepositorioMedia;
 
 import java.security.cert.Extension;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -56,7 +57,7 @@ public class MenuUI // UI = User Interface
         switch (opcion)
         {
             case 1 -> agregarJuego();
-            case 2 -> iniciar();
+            case 2 -> agregarExpansion();
             case 3 -> iniciar();
             case 4 -> iniciar();
             case 5 -> iniciar();
@@ -225,9 +226,13 @@ public class MenuUI // UI = User Interface
 
     private Expansion crearExpansion()
     {
-        int id = pedirEntero("Ingrese el ID de la expansion: ");
+        int id = pedirID("Ingresa el id de la expansion: ");
         String titulo = pedirStringNoVacio("Ingrese el titulo de la expansion: ", "titulo");
+        String creador = pedirStringNoVacio("Ingrese el nombre del creador: ", "creador");
+        String genero = pedirGenero("Ingrese el nombre del genero: ", "genero");
 
-        return null;
+        LocalDateTime fecha = LocalDateTime.now();
+
+        return new Expansion(id, titulo, creador, genero, fecha);
     }
 }
