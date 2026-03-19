@@ -3,6 +3,7 @@ package UI;
 import Excepciones.IdInvalidoException;
 import Excepciones.IdentificadorDuplicadoException;
 import Excepciones.NumVersionInvalidoException;
+import Excepciones.StringVacioException;
 import Modelo.Expansion;
 import Modelo.Juego;
 import Modelo.Media;
@@ -150,13 +151,13 @@ public class MenuUI // UI = User Interface
                 entrada = sc.nextLine();
                 if (entrada.trim().isEmpty())
                 {
-                    throw new InputMismatchException();
+                    throw new StringVacioException(nombreCampo);
                 }
                 break;
             }
-            catch (InputMismatchException e)
+            catch (StringVacioException e)
             {
-                System.out.println("❌ Error: El " + nombreCampo + " no puede estar vacío.");
+                System.out.println(e.getMessage());
             }
         }
 
@@ -226,6 +227,8 @@ public class MenuUI // UI = User Interface
 
     private Expansion crearExpansion()
     {
+        System.out.println("CREACION DE EXPANSION\n");
+
         int id = pedirID("Ingresa el id de la expansion: ");
         String titulo = pedirStringNoVacio("Ingrese el titulo de la expansion: ", "titulo");
         String creador = pedirStringNoVacio("Ingrese el nombre del creador: ", "creador");
