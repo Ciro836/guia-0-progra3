@@ -63,9 +63,7 @@ public class MenuUI // UI = User Interface
             case 2 -> agregarExpansion();
             case 3 -> eliminarMedia();
             case 4 -> mostrarColeccionOrdenadaPorTitulo();
-            case 5 ->
-            {
-            }
+            case 5 -> filtrarMediaPorGenero();
             case 999 -> System.out.println("\nSaliendo del sistema...");
             default -> System.out.println("\nIngrese una opcion correcta...");
         }
@@ -273,6 +271,12 @@ public class MenuUI // UI = User Interface
 
     private void mostrarColeccionOrdenadaPorTitulo()
     {
+        repositorio.mostrar();
+    }
 
+    private void filtrarMediaPorGenero()
+    {
+        String genero = pedirGenero();
+        repositorio.filtrarPorGenero(genero);
     }
 }
