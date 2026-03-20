@@ -61,12 +61,8 @@ public class MenuUI // UI = User Interface
         {
             case 1 -> agregarJuego();
             case 2 -> agregarExpansion();
-            case 3 ->
-            {
-            }
-            case 4 ->
-            {
-            }
+            case 3 -> eliminarMedia();
+            case 4 -> mostrarColeccionOrdenadaPorTitulo();
             case 5 ->
             {
             }
@@ -267,5 +263,16 @@ public class MenuUI // UI = User Interface
                 System.out.println("Por favor, intente de nuevo.\n");
             }
         }
+    }
+
+    private void eliminarMedia()
+    {
+        int id = pedirID();
+        repositorio.eliminar(id);
+    }
+
+    private void mostrarColeccionOrdenadaPorTitulo()
+    {
+
     }
 }
