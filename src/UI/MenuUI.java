@@ -9,7 +9,10 @@ import Modelo.Juego;
 import Modelo.Media;
 import Repositorios.RepositorioMedia;
 
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -58,9 +61,15 @@ public class MenuUI // UI = User Interface
         {
             case 1 -> agregarJuego();
             case 2 -> agregarExpansion();
-            case 3 -> iniciar();
-            case 4 -> iniciar();
-            case 5 -> iniciar();
+            case 3 ->
+            {
+            }
+            case 4 ->
+            {
+            }
+            case 5 ->
+            {
+            }
             case 999 -> System.out.println("\nSaliendo del sistema...");
             default -> System.out.println("\nIngrese una opcion correcta...");
         }
@@ -232,9 +241,31 @@ public class MenuUI // UI = User Interface
         String titulo = pedirStringNoVacio("Ingrese el titulo de la expansion: ", "titulo");
         String creador = pedirStringNoVacio("Ingrese el nombre del creador: ", "creador");
         String genero = pedirGenero();
-
-        LocalDateTime fecha = LocalDateTime.now();
+        LocalDateTime fecha = pedirFecha();
 
         return new Expansion(id, titulo, creador, genero, fecha);
+    }
+
+    private LocalDateTime pedirFecha()
+    {
+        while (true)
+        {
+            try
+            {
+                int anio = pedirEntero("Año (ej. 2024): ");
+                int mes = pedirEntero("Mes (1-12): ");
+                int dia = pedirEntero("Día (1-31): ");
+                int hora = pedirEntero("Hora (0-23): ");
+                int min = pedirEntero("Minutos (0-59): ");
+
+                // LocalDateTime.of valida automáticamente la lógica del calendario
+                return LocalDateTime.of(anio, mes, dia, hora, min);
+            }
+            catch (DateTimeException e)
+            {
+                System.out.println("❌ Error: La fecha o hora ingresada no es válida. " + e.getMessage());
+                System.out.println("Por favor, intente de nuevo.\n");
+            }
+        }
     }
 }
